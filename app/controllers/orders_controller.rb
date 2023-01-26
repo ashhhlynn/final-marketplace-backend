@@ -1,18 +1,24 @@
 class OrdersController < ApplicationController
 
     def index
-        orders = Order.all
+        o = Order.all
+        orders = o.select{|order| order.complete == true }  
+
          render json: orders, include: [order_items: {except: [:created_at, :updated_at, :order_id, :product_id]}]
      end
  
      def new
-         cart = Order.new
+         order = Order.new
      end
  
      def create
         @order = Order.create(order_params)
          render json: @order
      end
+
+     def show
+        Order.find(params[:id])
+     end 
  
      def update
          order = Order.find(params[:id])
@@ -28,7 +34,7 @@ class OrdersController < ApplicationController
  
  
      def order_params
-         params.require(:order).permit(:user_id, :total, :complete, :order_items => [:order_id, :title, :price])
+         params.require(:order).permit(:user_id, :total, :complete, :order_items => [:order_id, :price])
      end
 
 end
