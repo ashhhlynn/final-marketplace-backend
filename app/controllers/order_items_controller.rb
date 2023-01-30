@@ -1,30 +1,22 @@
 class OrderItemsController < ApplicationController
 
-   
+    skip_before_action :authorized, only: [:index]
+
     def index
         order_items = OrderItem.all
-         render json: order_items
-     end
- 
-   
-    def new
-    end 
+        render json: order_items
+    end
 
     def create
         order_item = OrderItem.create(order_item_params)
         render json: order_item
     end
 
-def show
-OrderItem.find_by(product_id: params[:id])
-end 
-
-
-def destroy
-    order_item = OrderItem.find_by(product_id: params[:id])
-    order_item.destroy
-    head :no_content, status: :ok
-  end
+    def destroy
+        order_item = OrderItem.find_by(product_id: params[:id])
+        order_item.destroy
+        head :no_content, status: :ok
+    end
 
     private
 

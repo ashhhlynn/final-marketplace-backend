@@ -1,5 +1,8 @@
 class ProductsController < ApplicationController
 
+  skip_before_action :authorized, only: [:index]
+
+
     def index
         products = Product.all
         render json: products
@@ -7,20 +10,20 @@ class ProductsController < ApplicationController
 
     def create
         @product = Product.create(product_params)
-        render json: @product
+        if @product.valid?
+        render json: @product, status: :created
+        else 
+        render json: @product.errors, status: :unprocessable_entity
     end
+  end
 
-      def destroy
-        product = Product.find(params[:id])
-        product.destroy
-        head :no_content, status: :ok
-      end
+    def destroy
+    end
 
     private
 
     def product_params
         params.require(:product).permit(:title, :price, :image_url, :description)
     end
-
 
 end
