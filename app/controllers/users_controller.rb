@@ -18,14 +18,14 @@ class UsersController < ApplicationController
             render json: { user: @user, jwt: @token},
             status: :created
         else
-            render json: { error: 'failed to create user' }, status: :unprocessable_entity
+            render json: { message: 'failed to create user' }, status: :unprocessable_entity
         end
     end
 
     private 
     
     def user_params
-        params.require(:user).permit(:name, :email, :address, :password)
+        params.require(:user).permit(:name, :email, :address, :password, :password_confirmation)
     end
 
 end

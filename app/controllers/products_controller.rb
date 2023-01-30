@@ -2,7 +2,6 @@ class ProductsController < ApplicationController
 
   skip_before_action :authorized, only: [:index]
 
-
     def index
         products = Product.all
         render json: products
@@ -17,13 +16,13 @@ class ProductsController < ApplicationController
     end
   end
 
-    def destroy
-    end
+  def destroy
+  end
 
-    private
+  private
 
-    def product_params
-        params.require(:product).permit(:title, :price, :image_url, :description)
-    end
+  def product_params
+      params.require(:product).permit(:title, :price, :image_url, :description)
+  end
 
 end
