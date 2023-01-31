@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
     if @product.valid?
       render json: @product, status: :created
     else 
-      render json: @product.errors, status: :unprocessable_entity
+      render json: {message: 'failed to create product'}, status: :unprocessable_entity
     end
   end
 
