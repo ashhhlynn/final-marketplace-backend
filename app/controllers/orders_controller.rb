@@ -3,8 +3,7 @@ class OrdersController < ApplicationController
     skip_before_action :authorized, only: [:index]
 
     def index
-        all_orders = Order.all
-        orders = all_orders.select{ |order| order.complete == true }  
+        orders = Order.all
         render json: orders, include: [order_items: {except: [:created_at, :updated_at, :order_id, :product_id]}]
     end 
  
@@ -15,8 +14,11 @@ class OrdersController < ApplicationController
  
     def update
         order = Order.find(params[:id])
-        order.update(order_params)
-        render json: order
+        if order.update(order_params)
+            render json: order
+        else 
+            render json: { message: 'failed to create order' }, status: :unprocessable_entity
+        end 
     end 
  
     def destroy
