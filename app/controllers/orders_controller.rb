@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
 
     def index
         orders = Order.all
-        render json: orders, include: [order_items: {except: [:created_at, :updated_at, :order_id, :product_id]}]
+        render json: orders
     end 
  
     def create
@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
     private
 
     def order_params
-        params.require(:order).permit(:user_id, :total, :complete, :order_items => [:order_id, :price])
+        params.require(:order).permit(:user_id, :total, :complete)
     end
 
 end
