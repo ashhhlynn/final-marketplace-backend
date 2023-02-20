@@ -8,20 +8,28 @@ class UsersController < ApplicationController
     end
     
     def profile
-        render json: {  user: current_user }, include: [orders: {include: :order_items}], status: :accepted
+        render json: {  user: current_user }, include: [:products, orders: {include: :order_items}], status: :accepted
     end
 
     def create
         @user = User.create(user_params)
         if @user.valid?
             @token = encode_token(user_id: @user.id)
-            render json: { user: @user, jwt: @token}, include: [orders: {include: :order_items}], 
-            status: :created
+            render json: { user: @user, jwt: @token}, include: [:products, orders: {include: :order_items}] 
         else
             render json: { message: 'failed to create user' }, status: :unprocessable_entity
         end
     end
 
+    def update
+        user = User.find(params[:id])
+        if user.update(user_params)
+            render json: user, include: [:products, orders: {include: :order_items}]
+        else 
+            render json: { message: 'failed to edit user' }, status: :unprocessable_entity
+        end 
+    end 
+    
     private 
     
     def user_params
