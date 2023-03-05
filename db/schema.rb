@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_25_110035) do
+ActiveRecord::Schema.define(version: 2023_01_25_110050) do
 
   create_table "order_items", force: :cascade do |t|
     t.string "order_id"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2023_01_25_110035) do
     t.float "price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "title"
+    t.string "seller"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -48,6 +50,9 @@ ActiveRecord::Schema.define(version: 2023_01_25_110035) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "city"
+    t.string "state"
+    t.string "zip"
   end
 
   add_foreign_key "products", "users"

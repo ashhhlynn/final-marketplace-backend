@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
 
-    skip_before_action :authorized, only: [:index]
 
     def index
         orders = Order.all
@@ -16,6 +15,7 @@ class OrdersController < ApplicationController
         order = Order.find(params[:id])
         if order.update(order_params)
             render json: order
+             
         else 
             render json: { message: 'failed to create order' }, status: :unprocessable_entity
         end 
@@ -23,6 +23,8 @@ class OrdersController < ApplicationController
  
     def destroy
     end
+
+   
  
     private
 

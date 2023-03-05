@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     def update
         user = User.find(params[:id])
         if user.update(user_params)
-            render json: user, include: [:products, orders: {include: :order_items}]
+            render json: {  user: current_user }, include: [:products, orders: {include: :order_items}], status: :accepted
         else 
             render json: { message: 'failed to edit user' }, status: :unprocessable_entity
         end 
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     private 
     
     def user_params
-        params.require(:user).permit(:name, :email, :address, :password, :password_confirmation)
+        params.require(:user).permit(:name, :email, :address, :city, :state, :zip, :password, :password_confirmation)
     end
 
 end
