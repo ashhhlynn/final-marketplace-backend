@@ -14,10 +14,9 @@ class OrdersController < ApplicationController
     def update
         order = Order.find(params[:id])
         if order.update(order_params)
-            render json: order
-             
+            render json: order, status: :created
         else 
-            render json: { message: 'failed to create order' }, status: :unprocessable_entity
+            render json: {message: 'failed to submit'}, status: :unprocessable_entity
         end 
     end 
  

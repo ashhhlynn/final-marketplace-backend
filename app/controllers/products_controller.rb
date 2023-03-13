@@ -19,11 +19,11 @@ class ProductsController < ApplicationController
   def update
     product = Product.find(params[:id])
     if product.update(product_params)
-        render json: product
+      render json: product
     else 
-        render json: { message: 'failed to edit product' }, status: :unprocessable_entity
+      render json: {message: 'failed to submit'}, status: :unprocessable_entity
     end 
-end 
+  end 
 
   def destroy
     product = Product.find(params[:id])
