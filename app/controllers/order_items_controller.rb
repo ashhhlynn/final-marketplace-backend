@@ -1,4 +1,5 @@
 class OrderItemsController < ApplicationController
+    skip_before_action :authorized, only: [:index]
 
     def index
         order_items = OrderItem.all
@@ -6,8 +7,11 @@ class OrderItemsController < ApplicationController
     end
 
     def create
-        order_item = OrderItem.create(order_item_params)
-        render json: order_item
+        if order_item = OrderItem.create(order_item_params)
+            render json: order_item
+        else 
+            render json: { message: 'failed to add to cart' }, status: :unprocessable_entity
+        end
     end
 
     def destroy
