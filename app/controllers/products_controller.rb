@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
   skip_before_action :authorized, only: [:index]
 
   def index
-    products = Product.all
+    products = Product.where(sold: false)
     render json: products
   end
 
